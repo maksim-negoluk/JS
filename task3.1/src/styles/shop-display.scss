@@ -1,0 +1,215 @@
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/roboto/v29/KFOlCnqEu92Fr1MmSU5vAw.ttf)
+    format("truetype");
+}
+
+html,
+body {
+  margin: 0;
+}
+
+//item template
+
+%item {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+
+  .top-part-block {
+    display: flex;
+    width: 100%;
+
+    .discount {
+      align-items: center;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      height: 50px;
+      margin: 5px;
+      text-align: center;
+      width: 50px;
+    }
+
+    img {
+      margin: auto;
+    }
+  }
+
+  .item-info {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .prices {
+      align-items: center;
+      display: flex;
+      padding: 0 0 5px 0;
+
+      .new-price {
+        font-size: 1.8em;
+      }
+
+      .old-price {
+        font-size: 1.2em;
+        position: relative;
+        margin: 0 0 0 5px;
+      }
+
+      .old-price:before {
+        border-top: 3px solid;
+        border-color: inherit;
+        content: "";
+        left: 0;
+        position: absolute;
+        top: 40%;
+        transform: rotate(7deg);
+        right: 0;
+      }
+    }
+  }
+
+  .item-description {
+    border: lightgray 3px;
+    border-style: dashed none dashed none;
+    padding: 5px;
+  }
+
+  .extra-info {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 5px 0 0 0;
+  }
+
+  & span{
+    font-size: 1em;
+  }
+}
+
+//mixin to assign color depending on discount
+
+@mixin color($color) {
+  border: $color 2px solid;
+
+  .discount {
+    background-color: $color;
+  }
+
+  .new-price {
+    color: $color;
+  }
+       }
+
+//main item
+
+.main {
+  @extend %item;
+  align-items: center;
+  border: #d61c4e 2px solid;
+  height: 100%;
+  padding: 10px 10px 5px 10px;
+  margin: 0 0 20px 0;
+  width: 100%;
+
+  .top-part-block {
+    img {
+      max-width: 70%;
+    }
+
+    .discount {
+      background-color: #d61c4e;
+    }
+  }
+
+  .item-info {
+    .new-price {
+      color: #d61c4e;
+    }
+  }
+
+  .item-description {
+    border: lightgray 3px;
+  }
+}
+
+//secondary item
+
+.secondary-item-block {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 -15px 0;
+  width: 100%;
+
+  .secondary {
+    @extend %item;
+    margin: 0 0 15px 0;
+    padding: 5px 10px;
+
+    .top-part-block {
+      .description-and-discount-block {
+        width: 100%;
+        flex-basis: 80%;
+
+        .item-description {
+          border: none;
+        }
+      }
+
+      .image-block {
+        display: flex;
+        flex-basis: 60%;
+
+        img {
+          max-width: 70%;
+        }
+      }
+    }
+
+    .extra-info {
+      border: lightgray 3px;
+      border-style: dashed none none none;
+    }
+  }
+}
+
+//colors for different discounts
+
+.orange {
+  @include color(#eb7013);
+}
+
+.yellow {
+  @include color(#f7cb2a);
+}
+
+@media only screen and (min-width: 992px) {
+
+  .main {
+    width: 33%;
+  }
+
+  .prices {
+    font-size: clamp(0.5em, 1vw, 1em);
+  }
+
+  .new-price {
+    font-size: clamp(1em, 2vw, 2em);
+  }
+
+  .secondary-item-block {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 66%;
+
+    .secondary {
+      width: 48%;
+    }
+  }
+}

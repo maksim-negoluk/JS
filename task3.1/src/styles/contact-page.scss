@@ -1,0 +1,50 @@
+.content-block {
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  & span {
+    font-size: 1.6em;
+    color: black;
+    margin: 0 0 10px 0;
+  }
+
+  .contact-form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+
+    & > * {
+      margin: 0 0 10px 0;
+      width: 100%;
+    }
+
+    & input[type="text"] {
+      border: gray 2px;
+      border-style: none none solid none;
+      padding: 3px;
+    }
+
+    & textarea {
+      border: gray 2px solid;
+      min-height: 100px;
+      padding: 3px;
+    }
+
+    & button {
+      width: 20%;
+      background-color: lightgray;
+      border: black 2px solid;
+      border-radius: 20px;
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .container {
+    .content-block {
+      flex-direction: column;
+    }
+  }
+}

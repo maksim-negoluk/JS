@@ -1,0 +1,25 @@
+.content-block {
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  .map {
+    align-self: center;
+    margin: 0 auto;
+    max-width: 80%;
+  }
+
+  & span {
+    font-size: 1.6em;
+    color: black;
+    margin: 0 0 10px 0;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .container {
+    .content-block {
+      flex-direction: column;
+    }
+  }
+}
