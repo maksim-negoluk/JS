@@ -4,31 +4,37 @@
   justify-content: center;
 
   & span {
-    font-size: 1.6em;
+    font-size: 2em;
     color: black;
     margin: 0 0 10px 0;
   }
 
-  .contact-form {
+  #registration-form {
     align-items: center;
     display: flex;
     flex-direction: column;
     width: 80%;
+
+    .social-media-login-block {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+
+      .fb-login-button {
+      }
+
+      .g-signin2 {
+      }
+    }
 
     & > * {
       margin: 0 0 10px 0;
       width: 100%;
     }
 
-    & input[type="text"] {
+    & input {
       border: gray 2px;
       border-style: none none solid none;
-      padding: 3px;
-    }
-
-    & textarea {
-      border: gray 2px solid;
-      min-height: 100px;
       padding: 3px;
     }
 

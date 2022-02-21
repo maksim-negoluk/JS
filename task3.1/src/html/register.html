@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-signin-client_id"
+      content="875184280469-7kkfrnojh1dgdb9mht3a0cfs33aa4m3a.apps.googleusercontent.com"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <title>register page</title>
+  </head>
+  <body>
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v13.0&appId=796183434671890&autoLogAppEvents=1" nonce="NfPb89Oe"></script>
+
+    <!--Script for facebook log in button-->
+
+    <script>
+      function statusChangeCallback(response) {
+        // Called with the results from FB.getLoginStatus().
+        window.sessionStorage.setItem('accessToken', response.authResponse.accessToken)
+        console.log('accessToken:', response.authResponse.accessToken)
+          // storing access token in session storage
+        if (response.status === "connected") {
+          // Logged into your webpage and Facebook.
+          testAPI();
+        } else {
+          // Not logged into your webpage or we are unable to tell.
+          document.getElementById("status").innerHTML =
+            "Please log " + "into this webpage.";
+        }
+      }
+
+      function checkLoginState() {
+        // Called when a person is finished with the Login Button.
+        FB.getLoginStatus(function (response) {
+          // See the onlogin handler
+          statusChangeCallback(response);
+        });
+      }
+
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "796183434671890",
+          cookie: true, // Enable cookies to allow the server to access the session.
+          xfbml: true, // Parse social plugins on this webpage.
+          version: "v13.0", // Use this Graph API version for this call.
+        });
+
+        FB.getLoginStatus(function (response) {
+          // Called after the JS SDK has been initialized.
+          statusChangeCallback(response); // Returns the login status.
+        });
+      };
+
+      function testAPI() {
+        // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+        console.log("Welcome!  Fetching your information.... ");
+        FB.api("/me", function (response) {
+          console.log("Successful login for: " + response.name);
+          document.getElementById("status").innerHTML =
+            "Thanks for logging in, " + response.name + "!";
+        });
+      }
+    </script>
+
+    <!--Script for google log in button-->
+
+    <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log("Name: " + profile.getName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+      }
+    </script>
+    <script src="../js/register.js" type="module"></script>
+    <div class="container">
+      <header class="header">
+        <img class="logo-image" src="../img/bike-logo.png" alt="bike" />
+        <span>Bike Shop</span>
+      </header>
+      <div class="main-block">
+        <nav class="nav-bar">
+          <a href="index.html">Home</a>
+          <a href="about.html">About us</a>
+          <a href="contacts.html">Contact page</a>
+          <a href="register.html">Sign up</a>
+        </nav>
+        <section class="content-block">
+          <span>Sign up</span>
+          <form id="registration-form" method="post" target="#">
+            <input type="text" placeholder="name" class="name-field" />
+            <input type="text" placeholder="email" class="email-field" />
+            <input
+              type="password"
+              placeholder="password"
+              class="password-field"
+            />
+            <input
+              type="password"
+              placeholder="confirm password"
+              class="password-confirmation-field"
+            />
+            <div class="social-media-login-block">
+              <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+              </fb:login-button>
+              <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
+            <button type="submit" class="submit-button">Sign up</button>
+          </form>
+        </section>
+
+        <aside class="links-block"></aside>
+      </div>
+
+      <footer class="footer">© 2022 Negoluk Maxim. All rights reserved</footer>
+
+      <!--Including everything for facebook and google log in buttons-->
+
+      <script
+        async
+        defer
+        crossorigin="anonymous"
+        src="https://connect.facebook.net/en_US/sdk.js"
+      ></script>
+      <script
+        src="https://apis.google.com/js/platform.js?onload=renderButton"
+        async
+        defer
+      ></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+    </div>
+  </body>
+</html>

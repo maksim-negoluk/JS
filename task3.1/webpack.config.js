@@ -1,23 +1,32 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractorPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const fs = require("fs")
 
 module.exports = {
   entry: {
     main: "./src/js/home.js",
     about: "./src/js/about-us.js",
     contacts: "./src/js/contact-page.js",
+    register: "./src/js/register.js",
   },
   node: false,
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
+    filename: "[name].[hash].js",
     clean: true,
   },
   devtool: "source-map",
+  devServer: {
+    https: {
+      key: fs.readFileSync("cert/cert.key"),
+      cert: fs.readFileSync("cert/cert.crt"),
+      ca: fs.readFileSync("cert/ca.crt"),
+    },
+  },
   plugins: [
     new MiniCssExtractorPlugin({
-      filename: "[name].css",
+      filename: "[name].[hash].css",
     }),
     new HtmlWebpackPlugin({
       filename: "index.html",
@@ -33,6 +42,11 @@ module.exports = {
       filename: "contacts.html",
       template: "./src/html/contact-page.html",
       chunks: ["contacts"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "register.html",
+      template: "./src/html/register.html",
+      chunks: ["register"],
     }),
   ],
   module: {
