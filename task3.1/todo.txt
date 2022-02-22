@@ -1,5 +1,0 @@
-1) minimum form validation: same password, better email validation.
-2) try to style social medias buttons
-3) make tree input depending on what mentor says
-4) refactor some code
-5) resolve provblem with gmail auth
