@@ -14,28 +14,29 @@ const wrapper: HTMLDivElement = document.querySelector(".wrapper");
 const colorLabel: HTMLSpanElement = document.querySelector(".color");
 const colorChangingButton: HTMLButtonElement = document.querySelector(".color-changing-button");
 
-let previousIndex: number;
+let backgroundColor: string
 
-const getRandomArrayElement = (array: string[]): string => {
-  let randomIndex:number = Math.floor(Math.random() * array.length);
+const generateHexColor = ():void => {
+  backgroundColor = `#${(Math.random().toString(16) + "000000").substring(2,8)}`
+}
 
-  while (randomIndex === previousIndex) {
-    randomIndex = Math.floor(Math.random() * array.length);
-  }
+const generateRgbColor = ():void => {
+  const r = Math.floor(Math.random()*256);
+  const g = Math.floor(Math.random()*256);
+  const b = Math.floor(Math.random()*256);
+  backgroundColor = `rgb(${r},${g},${b})`
+}
 
-  previousIndex = randomIndex;
-  return array[randomIndex];
-};
-
-const setTextContent = (node: HTMLElement, array: string[]): void => {
-  node.textContent = array[previousIndex];
+const setTextContent = (node: HTMLElement): void => {
+  node.textContent = backgroundColor;
 };
 
 const setBackgroundColor = (node: HTMLElement): void => {
-  node.style.backgroundColor = getRandomArrayElement(colorsArray);
+  node.style.backgroundColor = backgroundColor;
 };
 
 colorChangingButton.onclick = (): void => {
+  generateHexColor()
   setBackgroundColor(wrapper);
-  setTextContent(colorLabel, colorsArray);
+  setTextContent(colorLabel);
 };
