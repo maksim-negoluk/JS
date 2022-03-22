@@ -1,0 +1,119 @@
+$main_color: #cc8916;
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  background-color: #e4eff2;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    color: #0d0936;
+    font-size: 2em;
+    letter-spacing: 2px;
+    margin: 50px 0 10px 0;
+  }
+
+  hr {
+    border: none;
+    border-bottom: 5px solid $main_color;
+    margin: 0 0 20px 0;
+    width: 50px;
+  }
+
+  .sort-buttons-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 0 30px 0;
+    width: 40%;
+
+    button {
+      background-color: rgba(0, 0, 0, 0);
+      border: 1px solid $main_color;
+      border-radius: 5px;
+      box-shadow: 1px 1px 2px black;
+      color: $main_color;
+      font-size: 1.05em;
+      padding: 5px 20px;
+      margin: 0 10px 10px 0;
+    }
+  }
+
+  .items-block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+
+    .item {
+      display: flex;
+      padding: 0 20px 20px 0;
+      width: 50%;
+
+      .item-picture-block {
+        align-items: center;
+        display: flex;
+        width: 40%;
+
+        img {
+          border: 3px solid $main_color;
+          border-radius: 20px;
+          width: clamp(120px, 100%, 600px);
+        }
+      }
+
+      .item-info-block {
+        margin: 0 0 0 20px;
+        width: 60%;
+
+        .item-title-block {
+          border-bottom: 1px solid gray;
+          display: flex;
+          justify-content: space-between;
+          letter-spacing: 2px;
+          padding: 0 0 5px 0;
+
+          .item-title {
+            color: #0d0936;
+            margin: 0 10px 0 0;
+          }
+
+          .price {
+            color: $main_color;
+          }
+        }
+
+        .item-description-block {
+          .item-description {
+            color: #352e82;
+            line-height: 1.2em;
+            max-height: 6em;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+
+    .items-block {
+      width: 90%;
+
+      .item {
+        width: 100%;
+      }
+    }
+  }
+}
