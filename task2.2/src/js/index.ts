@@ -1,4 +1,6 @@
-import "../styles/style.scss"
-import "../img/pancake.jpg"
-import "../img/burgers.jpg"
-import "../fonts/Roboto-Regular.ttf"
+import "../styles/style.scss";
+import "../fonts/Roboto-Regular.ttf";
+import {renderFilteredItems, renderButtons, categoriesArray} from "./functions";
+
+renderButtons(categoriesArray);
+renderFilteredItems("all")

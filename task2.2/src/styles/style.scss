@@ -30,7 +30,7 @@ html {
     width: 50px;
   }
 
-  .sort-buttons-block {
+  .filter-buttons-block {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -107,6 +107,11 @@ html {
 
 @media screen and (max-width: 768px) {
   .wrapper {
+
+    .filter-buttons-block {
+      flex-direction: column;
+      width: 30%;
+    }
 
     .items-block {
       width: 90%;
