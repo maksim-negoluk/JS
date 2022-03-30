@@ -32,10 +32,11 @@ const renderOnEvent = async (action: string, selector: string) => {
     event.preventDefault();
     let formValuesObject:tableRow = getFormValues()
     const numbersArray = generateRandomNumberArray(formValuesObject.length, formValuesObject.bottomInterval, formValuesObject.topInterval)
-    logArraysComparison(formValuesObject.method, numbersArray)
+    console.log(`before: ${numbersArray}`)
     formValuesObject.executionTime = getSortingTime(formValuesObject.method, numbersArray)
+    console.log(`after: ${numbersArray}`)
     renderTableData(formValuesObject);
   });
 };
 
-export {tableRow, renderOnEvent}
+export {tableRow, renderOnEvent, allSortingMethods}
