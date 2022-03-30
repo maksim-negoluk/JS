@@ -1,6 +1,6 @@
 import "../styles/style.scss"
-import {setEventListener} from "./data";
-import {renderOutputTableTitle} from "./render";
+import {renderDefaultPage} from "./render";
 
-setEventListener("click", ".submit-button")
-renderOutputTableTitle()
+renderDefaultPage()
+
+
