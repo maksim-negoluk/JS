@@ -1,4 +1,5 @@
-import {Options, inputOptions, returnInput} from "./data";
+import {Options, inputOptions} from "./data";
+import {returnInput} from "./inputGenerator";
 
 const wrapper = document.querySelector(".wrapper")
 
@@ -32,7 +33,19 @@ const generateFormBottom = () => {
     return formBottom
 }
 
-export const renderForm = () => {
+const generateErrorMessage = (message:string) => {
+    const errorMessage = document.createElement("p")
+    errorMessage.className = "errorMessage"
+    errorMessage.innerHTML = message
+    return errorMessage
+}
+
+const renderErrorMessage = (message:string, name:string) => {
+    const inputBlock = document.querySelector(`[name="${name}"]`)
+    inputBlock.insertAdjacentElement("afterend", generateErrorMessage(message))
+}
+
+const renderForm = () => {
     const form = document.createElement("form")
     form.className = "form"
     form.appendChild(generateFormTop())
@@ -40,3 +53,5 @@ export const renderForm = () => {
     form.appendChild(generateFormBottom())
     wrapper.insertAdjacentElement("afterbegin", form)
 }
+
+export {renderForm, renderErrorMessage}

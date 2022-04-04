@@ -55,7 +55,10 @@ html, body {
           border-radius: 5px;
           padding: 5px 10px;
           width: 100%;
-
+        }
+        .errorMessage {
+          color: #da3838;
+          font-size: 0.8em;
         }
       }
     }
@@ -70,6 +73,18 @@ html, body {
         color: #e4efec;
         font-size: 1.1em;
         padding: 5px 10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px)  {
+  .wrapper {
+    .form {
+      .inputs {
+        .input-block {
+          width: 100%;
+        }
       }
     }
   }

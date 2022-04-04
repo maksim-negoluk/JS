@@ -16,14 +16,14 @@ const Options:inputOptions[] = [
         placeholder: "enter your last name"
     },
     {
-        type: "email",
+        type: "text",
         name: "email",
         placeholder: "enter your email"
     },
     {
         type: "text",
         name: "date",
-        placeholder: "enter date"
+        placeholder: `enter date (format: ${new Date().toLocaleDateString('en-US')})`
     },
     {
         type: "password",
@@ -37,87 +37,13 @@ const Options:inputOptions[] = [
     },
 ]
 
-const textInput = (options:inputOptions) => {
-    return {
-        options: {
-            type: "text",
-            name: options.name,
-            placeholder: options.placeholder,
-        },
-        template: `<input type=${options.type} name="${options.name}" placeholder="${options.placeholder}"/>`,
-    }
+interface formInputs {
+    [firstName:string]:HTMLInputElement
+    lastName:HTMLInputElement
+    email:HTMLInputElement
+    date:HTMLInputElement
+    password:HTMLInputElement
+    passwordConfirmation:HTMLInputElement
 }
 
-const emailInput = (options:inputOptions) => {
-    return {
-        options: {
-            type: "email",
-            name: options.name,
-            placeholder: options.placeholder,
-        },
-        template: `<input type=${options.type} name="${options.name}" placeholder="${options.placeholder}"/>`,
-    }
-}
-
-const dateInput = (options:inputOptions) => {
-    return {
-        options: {
-            type: "date",
-            name: options.name,
-            placeholder: options.placeholder,
-        },
-        template: `<input type=${options.type} name="${options.name}" placeholder="${options.placeholder}"/>`,
-    }
-}
-
-const passwordInput = (options:inputOptions) => {
-    return {
-        options: {
-            type: "password",
-            name: options.name,
-            placeholder: options.placeholder,
-        },
-        template: `<input type=${options.type} name="${options.name}" placeholder="${options.placeholder}"/>`,
-    }
-}
-
-const returnInput = (options:inputOptions) => {
-    if(options.type === "text"){
-        return textInput(options)
-    }
-    if(options.type === "email"){
-        return emailInput(options)
-    }
-    if(options.type === "date"){
-        return dateInput(options)
-    }
-    if(options.type === "password"){
-        return passwordInput(options)
-    }
-}
-
-const Validator = () => {
-    return {
-        Validate(condition:boolean) {
-            if(condition){
-                //do something
-            }
-            else {
-                this.showError()
-            }
-        },
-        showError(errorMassage:string) {
-            console.log(errorMassage)
-        },
-        isEmail(inputField:HTMLInputElement) {
-            const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return inputField.value.match(emailRegex)
-        },
-        isDate(inputField:HTMLInputElement) {
-            const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
-            return inputField.value.match(dateRegex)
-        }
-    }
-}
-
-export {inputOptions, Options, returnInput}
+export {inputOptions, Options, formInputs}
