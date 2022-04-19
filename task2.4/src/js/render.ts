@@ -1,22 +1,20 @@
-import {Options, inputOptions} from "./data";
-import {returnInput} from "./inputGenerator";
-
 const wrapper = document.querySelector(".wrapper")
 
-const generateInput = (array:inputOptions[]) => {
-    return array.map((inputOptions) => {
-        return `<div class="input-block"><span> ${inputOptions.name} </span> ${returnInput(inputOptions).template}</div>`
-    })
+
+const generateTextInput = (id:string, tittle:string):HTMLDivElement => {
+    const inputBlock = document.createElement("div")
+    inputBlock.className = "input-block"
+    inputBlock.innerHTML = `<span>${tittle}:</span> 
+  <input id=${id} class="input" type="text">`
+    return inputBlock
 }
 
-const generateInputsBlock = ():HTMLDivElement => {
-    const inputsBlock = document.createElement("div")
-    inputsBlock.className = "inputs"
-    const inputs = generateInput(Options)
-    inputs.forEach((input) => {
-        inputsBlock.insertAdjacentHTML("beforeend", input)
-    })
-    return inputsBlock
+const generatePasswordInput = (id:string, tittle:string):HTMLDivElement => {
+    const inputBlock = document.createElement("div")
+    inputBlock.className = "input-block"
+    inputBlock.innerHTML = `<span>${tittle}:</span> 
+  <input id=${id} class="input" type="password">`
+    return inputBlock
 }
 
 const generateFormTop = () => {
@@ -24,6 +22,18 @@ const generateFormTop = () => {
     formTop.className = "form-top"
     formTop.innerHTML = `<span class="title">Create Account</span>`
     return formTop
+}
+
+const generateInputsBlock = ():HTMLDivElement => {
+    const inputsBlock = document.createElement("div")
+    inputsBlock.className = "inputs"
+    inputsBlock.insertAdjacentElement("beforeend", generateTextInput("firstName","first name"))
+    inputsBlock.insertAdjacentElement("beforeend", generateTextInput("lastName","last name"))
+    inputsBlock.insertAdjacentElement("beforeend", generateTextInput("email","email"))
+    inputsBlock.insertAdjacentElement("beforeend", generateTextInput("date","date"))
+    inputsBlock.insertAdjacentElement("beforeend", generatePasswordInput("password","password"))
+    inputsBlock.insertAdjacentElement("beforeend", generatePasswordInput("passwordConfirmation","confirm password"))
+    return inputsBlock
 }
 
 const generateFormBottom = () => {
@@ -40,14 +50,14 @@ const generateErrorMessage = (message:string) => {
     return errorMessage
 }
 
-const renderErrorMessage = (message:string, name:string) => {
-    const inputBlock = document.querySelector(`[name="${name}"]`)
-    inputBlock.insertAdjacentElement("afterend", generateErrorMessage(message))
+const renderErrorMessage = (message:string, element:HTMLInputElement) => {
+    element.insertAdjacentElement("afterend", generateErrorMessage(message))
 }
 
 const renderForm = () => {
     const form = document.createElement("form")
-    form.className = "form"
+    form.id = "form"
+    form.method = "post"
     form.appendChild(generateFormTop())
     form.appendChild(generateInputsBlock())
     form.appendChild(generateFormBottom())

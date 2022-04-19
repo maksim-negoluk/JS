@@ -22,7 +22,7 @@ html, body {
   background-color: #487081;
   height: 100%;
 
-  .form {
+  #form {
     background-color: #eff0f1;
     border-radius: 20px;
     width: 80%;
@@ -80,7 +80,7 @@ html, body {
 
 @media screen and (max-width: 768px)  {
   .wrapper {
-    .form {
+    #form {
       .inputs {
         .input-block {
           width: 100%;
