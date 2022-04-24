@@ -16,17 +16,17 @@ const renderSearchBar = async () => {
     return searchBar
 }
 
-const renderSearchedCity = (city:string, country:string) => {
+const renderSearchedCity = (location:string) => {
     const searchedCity = document.createElement("p")
-    searchedCity.innerHTML = `Selected: <span class="selected-filters">${city} ${country}</span>`
+    searchedCity.innerHTML = `Selected: <span class="selected-city">${location}</span>`
     return searchedCity
 }
 
-const renderSearchBlock = async (searchedCity:any = "", searchedCountry:any = "") => {
+const renderSearchBlock = async (location:string = "enter city name") => {
     const searchBlock = document.createElement("div")
     searchBlock.className = "search-block"
     searchBlock.insertAdjacentElement("beforeend", await renderSearchBar())
-    searchBlock.insertAdjacentElement("beforeend", renderSearchedCity(searchedCity, searchedCountry))
+    searchBlock.insertAdjacentElement("beforeend", renderSearchedCity(location))
     return searchBlock
 }
 
@@ -40,10 +40,10 @@ const renderCurrentInfo = (tilesData:any) => {
             </div>
             <div>
               <p class="description">${tilesData.currentData.description}</p>
-              <p class="city">${tilesData.currentData.city}, ${tilesData.currentData.country}</p>
+              <p class="city">${tilesData.currentData.location}</p>
             </div>
             <div>
-              <img src="${tilesData.currentData.icon}" >
+              <img src="${tilesData.currentData.icon}" alt=${tilesData.currentData.description}>
             </div>`
     return tile
 }
@@ -53,7 +53,7 @@ const renderDailyInfo = (tilesData:any) => {
     tile.className = "tile"
     tile.innerHTML = `
             <p class="day">${tilesData.dailyData.day}</p>
-            <img src="${tilesData.dailyData.icon}" >
+            <img src="${tilesData.dailyData.icon}" alt=${tilesData.currentData.description}>
             <p class="description">${tilesData.dailyData.description}</p>
             <div>
               <p class="temperature">${tilesData.dailyData.maxTemperature}&degC</p>
@@ -66,9 +66,7 @@ const renderWeatherDisplay = (tilesData:any) => {
     const displayBlock = document.createElement("div")
     displayBlock.className = "weather-display"
     tilesData.weatherData.forEach((tile:any) => {
-        if(tilesData.weatherData.indexOf(tile) === 0) {
-            displayBlock.insertAdjacentElement("beforeend", renderCurrentInfo(tile))
-        }
+        (tilesData.weatherData.indexOf(tile) === 0) && displayBlock.insertAdjacentElement("beforeend", renderCurrentInfo(tile));
         displayBlock.insertAdjacentElement("beforeend", renderDailyInfo(tile))
     })
     return displayBlock
@@ -79,7 +77,7 @@ const renderWeatherWidget = async (weatherData:any = null) => {
     weatherWidget.className = "weather-widget";
     (document.querySelector(".weather-widget") && (document.querySelector(".weather-widget").remove()))
     if(weatherData) {
-        weatherWidget.insertAdjacentElement("beforeend", await renderSearchBlock(weatherData.weatherData[0].currentData.city, weatherData.weatherData[0].currentData.country))
+        weatherWidget.insertAdjacentElement("beforeend", await renderSearchBlock(weatherData.weatherData[0].currentData.location))
         weatherWidget.insertAdjacentElement("beforeend", renderWeatherDisplay(weatherData))
     }
     else {
