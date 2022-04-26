@@ -1,11 +1,11 @@
-import {processWeatherData} from "./data";
+import {processWeatherData, WeatherResponseObject, SingleDayWeatherInfo} from "./data";
 
-const renderObtainWeatherData = async () => {
+const renderObtainWeatherData = async ():Promise<void> => {
     const data = await processWeatherData()
     await render(data)
 }
 
-const renderSearchBar = async () => {
+const renderSearchBar = async ():Promise<HTMLFormElement> => {
     const searchBar = document.createElement("form")
     searchBar.id = "search-form"
     searchBar.addEventListener("submit", event => {
@@ -16,13 +16,13 @@ const renderSearchBar = async () => {
     return searchBar
 }
 
-const renderSearchedCity = (location:string) => {
+const renderSearchedCity = (location:string):HTMLParagraphElement => {
     const searchedCity = document.createElement("p")
     searchedCity.innerHTML = `Selected: <span class="selected-city">${location}</span>`
     return searchedCity
 }
 
-const renderSearchBlock = async (location:string = "enter city name") => {
+const renderSearchBlock = async (location:string = "enter city name"):Promise<HTMLDivElement> => {
     const searchBlock = document.createElement("div")
     searchBlock.className = "search-block"
     searchBlock.insertAdjacentElement("beforeend", await renderSearchBar())
@@ -30,7 +30,7 @@ const renderSearchBlock = async (location:string = "enter city name") => {
     return searchBlock
 }
 
-const renderCurrentInfo = (tilesData:any) => {
+const renderCurrentInfo = (tilesData:SingleDayWeatherInfo):HTMLDivElement => {
     const tile = document.createElement("div")
     tile.className = "tile"
     tile.innerHTML = `
@@ -48,7 +48,7 @@ const renderCurrentInfo = (tilesData:any) => {
     return tile
 }
 
-const renderDailyInfo = (tilesData:any) => {
+const renderDailyInfo = (tilesData:SingleDayWeatherInfo):HTMLDivElement => {
     const tile = document.createElement("div")
     tile.className = "tile"
     tile.innerHTML = `
@@ -62,7 +62,7 @@ const renderDailyInfo = (tilesData:any) => {
     return tile
 }
 
-const renderWeatherDisplay = (tilesData:any) => {
+const renderWeatherDisplay = (tilesData:WeatherResponseObject):HTMLDivElement => {
     const displayBlock = document.createElement("div")
     displayBlock.className = "weather-display"
     tilesData.weatherData.forEach((tile:any) => {
@@ -72,7 +72,7 @@ const renderWeatherDisplay = (tilesData:any) => {
     return displayBlock
 }
 
-const renderWeatherWidget = async (weatherData:any = null) => {
+const renderWeatherWidget = async (weatherData:WeatherResponseObject = null):Promise<HTMLDivElement> => {
     const weatherWidget = document.createElement("div")
     weatherWidget.className = "weather-widget";
     (document.querySelector(".weather-widget") && (document.querySelector(".weather-widget").remove()))
@@ -86,7 +86,7 @@ const renderWeatherWidget = async (weatherData:any = null) => {
     return weatherWidget
 }
 
-const render = async (dataObject:any = null) => {
+const render = async (dataObject:WeatherResponseObject = null):Promise<void> => {
     document.querySelector(".wrapper").insertAdjacentElement("afterbegin", await renderWeatherWidget(dataObject))
 }
 

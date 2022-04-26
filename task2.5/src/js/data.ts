@@ -1,7 +1,33 @@
 import {getWeatherData} from "./request";
 import {kelvinToCelsius} from "./utils";
 
-const processWeatherData = async () => {
+interface CurrentWeatherData {
+    location: string
+    feels_likeTemperature: number
+    temperature: number
+    description: string
+    icon: string
+    dailyData: object
+}
+
+interface DailyWeatherData {
+    day: string
+    minTemperature: number
+    maxTemperature: number
+    description: string
+    icon: string
+}
+
+interface SingleDayWeatherInfo {
+    currentData: CurrentWeatherData
+    dailyData: DailyWeatherData
+}
+
+interface WeatherResponseObject {
+    weatherData: SingleDayWeatherInfo[]
+}
+
+const processWeatherData = async ():Promise<WeatherResponseObject> => {
     try {
         const generalWeatherData = await getWeatherData()
         const currentWeatherData = generalWeatherData.list[0]
@@ -35,4 +61,4 @@ const processWeatherData = async () => {
     }
 }
 
-export {processWeatherData}
+export {processWeatherData, WeatherResponseObject, SingleDayWeatherInfo}
