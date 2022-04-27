@@ -78,7 +78,7 @@ const renderTodoItem = (taskId:string, taskText:string):HTMLDivElement => {
     return todoItem
 }
 
-const renderDeleteButton = (taskId:string) => {
+const renderDeleteButton = (taskId:string):HTMLImageElement => {
     const deleteButton:HTMLImageElement = document.createElement("img")
     deleteButton.src = deleteIcon
     deleteButton.alt = "delete"
@@ -89,7 +89,7 @@ const renderDeleteButton = (taskId:string) => {
     return deleteButton
 }
 
-const renderCheckmarkButton = () => {
+const renderCheckmarkButton = ():HTMLImageElement => {
     const checkmarkButton:HTMLImageElement = document.createElement("img")
     checkmarkButton.src = checkmarkIcon
     checkmarkButton.alt = "checkmark"

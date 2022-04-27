@@ -1,6 +1,6 @@
 import "../styles/style.scss"
 import {render} from "./render";
 
-window.onload = () =>  {
+window.onload = ():void =>  {
     render()
 }

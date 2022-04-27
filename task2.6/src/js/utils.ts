@@ -3,15 +3,11 @@ interface CookieData {
     cookieValues:string[]
 }
 
-const removeAllChildElements = (selector:string) => {
+const removeAllChildElements = (selector:string):void => {
     const element:Element = document.querySelector(selector)
     while (element.hasChildNodes()) {
         element.removeChild(element.lastChild)
     }
-}
-
-const toggleTodoItem = (item:HTMLDivElement, defaultTextColor:string) => {
-
 }
 
 const getUniqueId = ():string => {
@@ -25,7 +21,7 @@ const getExpirationTime = (minutes:number):string => {
     return  `expires=${expirationDate};`
 }
 
-const getCookieString = (expirationTime:number, cookieValue:string) => {
+const getCookieString = (expirationTime:number, cookieValue:string):string => {
     return `${getUniqueId()}=${cookieValue}; ${getExpirationTime(expirationTime)}`
 }
 
