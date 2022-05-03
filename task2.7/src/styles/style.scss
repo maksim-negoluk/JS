@@ -1,0 +1,222 @@
+@mixin flex-column {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.light-theme {
+  --backgroundColor: #ffffff;
+  --countriesBlockBackground: #e8e8e8;
+  --fontColor: #000000;
+  --shadow: #242424
+}
+
+.dark-theme {
+  --backgroundColor: #0f0f0f;
+  --countriesBlockBackground: #1c1c1c;
+  --fontColor: #f0f0f0;
+  --shadow: #adadad;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+.wrapper {
+  @include flex-column;
+  margin: 0 auto;
+  color: var(--fontColor);
+
+  .title-block {
+    align-items: center;
+    background-color: var(--backgroundColor);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5%;
+    width: 100%;
+
+    .title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: bold;
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+
+    .dark-mode-toggle {
+      align-items: center;
+      background-color: var(--backgroundColor);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+
+      &:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--fontColor);
+      }
+
+      .moon {
+        height: clamp(0.9rem, 1.5vw, 1.1rem);
+        width: clamp(0.9rem, 1.5vw, 1.1rem);
+        box-shadow: -3px 3px 0 1px var(--shadow);
+        border-radius: 50%;
+        background-color: var(--backgroundColor);
+      }
+
+      span {
+        padding: 5px 0 0 5px;
+        color: var(--fontColor);
+      }
+    }
+  }
+  .main-block {
+    @include flex-column;
+    background-color: var(--backgroundColor);
+    width: 100%;
+
+    .search-block {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 5%;
+      width: 100%;
+
+      form {
+        width: 30%;
+
+        .search-bar {
+          border: none;
+          border-radius: 5px;
+          box-shadow: 1px 2px 5px 0 var(--shadow);
+          padding: 10px;
+          margin: 0 0 5px 0;
+          width: 100%;
+        }
+
+        .error-message {
+          color: #c7142f;
+          font-size: clamp(1rem, 1.5vw, 1.2rem);
+          padding: 5px 0 0 0;
+        }
+      }
+
+      .select-by-region {
+        border-radius: 5px;
+        float: right;
+        font-size: clamp(0.8rem, 1.5vw, 1rem);
+        padding: 10px;
+        width: 30%;
+      }
+    }
+
+    .country-list {
+      @include flex-column;
+      background-color: var(--countriesBlockBackground);
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 0 5%;
+      width: 100%;
+
+      .country {
+        background-color: var(--backgroundColor);
+        border-radius: 10px;
+        box-shadow: 2px 2px 5px 0 var(--shadow);
+        margin: 20px 0;
+        width: 21%;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+
+        p {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: clamp(0.8rem, 1.5vw, 1rem);
+          padding: 5px 10px;
+        }
+
+        p:first-of-type, span {
+          font-weight: bold;
+        }
+
+        p:first-of-type {
+          padding: 10px;
+          font-size: clamp(1rem, 1.5vw, 1.2rem);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    .main-block {
+      .search-block {
+        form {
+          width: 45%;
+        }
+
+        .select-by-region {
+          width: 45%;
+        }
+      }
+      .country-list {
+
+        .country {
+          width: 45%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 412px) {
+  .wrapper {
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+
+      & > * {
+        padding: 5px 0;
+      }
+    }
+
+    .main-block {
+
+      .search-block {
+        display: flex;
+        flex-direction: column;
+        form {
+          width: 90%;
+        }
+
+       .select-by-region {
+          margin: 10px 0;
+          width: 90%;
+        }
+      }
+
+      .country-list {
+        justify-content: center;
+
+        .country {
+          width: 90%;
+        }
+      }
+    }
+  }
+}
