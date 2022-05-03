@@ -4,6 +4,9 @@
   flex-direction: column;
 }
 
+$smallDisplay: 412px;
+$mediumDisplay: 768px;
+
 .light-theme {
   --backgroundColor: #ffffff;
   --countriesBlockBackground: #e8e8e8;
@@ -31,8 +34,8 @@ html, body {
 
 .wrapper {
   @include flex-column;
-  margin: 0 auto;
   color: var(--fontColor);
+  margin: 0 auto;
 
   .title-block {
     align-items: center;
@@ -41,6 +44,15 @@ html, body {
     justify-content: space-between;
     padding: 20px 5%;
     width: 100%;
+
+    @media screen and (max-width: $smallDisplay){
+        display: flex;
+        flex-direction: column;
+
+        & > * {
+          padding: 5px 0;
+        }
+    }
 
     .title {
       font-size: clamp(1.5rem, 3vw, 2rem);
@@ -91,8 +103,21 @@ html, body {
       padding: 10px 5%;
       width: 100%;
 
+      @media screen and (max-width: $smallDisplay) {
+        display: flex;
+        flex-direction: column;
+      }
+
       form {
         width: 30%;
+
+        @media screen and (max-width: $mediumDisplay) {
+          width: 45%;
+        }
+
+        @media screen and (max-width: $smallDisplay) {
+          width: 90%;
+        }
 
         .search-bar {
           border: none;
@@ -116,28 +141,55 @@ html, body {
         font-size: clamp(0.8rem, 1.5vw, 1rem);
         padding: 10px;
         width: 30%;
+
+        @media screen and (max-width: $mediumDisplay) {
+          width: 45%;
+        }
+
+        @media screen and (max-width: $smallDisplay) {
+          margin: 10px 0;
+          width: 90%;
+        }
       }
     }
 
     .country-list {
-      @include flex-column;
+      display: flex;
       background-color: var(--countriesBlockBackground);
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-between;
       padding: 0 5%;
+      min-height: 100vh;
       width: 100%;
+
+      @media screen and (max-width: $smallDisplay) {
+        justify-content: center;
+      }
 
       .country {
         background-color: var(--backgroundColor);
         border-radius: 10px;
         box-shadow: 2px 2px 5px 0 var(--shadow);
+        height: 100%;
         margin: 20px 0;
         width: 21%;
+
+        @media screen and (max-width: $mediumDisplay) {
+          width: 45%;
+        }
+
+        @media screen and (max-width: $smallDisplay) {
+          width: 90%;
+        }
 
         img {
           width: 100%;
           height: auto;
+        }
+
+        span {
+          font-weight: bold;
         }
 
         p {
@@ -148,73 +200,10 @@ html, body {
           padding: 5px 10px;
         }
 
-        p:first-of-type, span {
-          font-weight: bold;
-        }
-
         p:first-of-type {
-          padding: 10px;
           font-size: clamp(1rem, 1.5vw, 1.2rem);
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .wrapper {
-    .main-block {
-      .search-block {
-        form {
-          width: 45%;
-        }
-
-        .select-by-region {
-          width: 45%;
-        }
-      }
-      .country-list {
-
-        .country {
-          width: 45%;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 412px) {
-  .wrapper {
-
-    .title-block {
-      display: flex;
-      flex-direction: column;
-
-      & > * {
-        padding: 5px 0;
-      }
-    }
-
-    .main-block {
-
-      .search-block {
-        display: flex;
-        flex-direction: column;
-        form {
-          width: 90%;
-        }
-
-       .select-by-region {
-          margin: 10px 0;
-          width: 90%;
-        }
-      }
-
-      .country-list {
-        justify-content: center;
-
-        .country {
-          width: 90%;
+          font-weight: bold;
+          padding: 10px;
         }
       }
     }

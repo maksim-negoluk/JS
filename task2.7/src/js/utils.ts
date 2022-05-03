@@ -16,4 +16,22 @@ const toggleDarkMode = ():void => {
     })
 }
 
-export {removeAllChildElements, toggleDarkMode}
+const loadingImageObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if(entry.isIntersecting) {
+            const lazyImage:any = entry.target
+            lazyImage.src = lazyImage.dataset.src
+            lazyImage.classList.remove("loading")
+            loadingImageObserver.unobserve(lazyImage)
+        }
+    })
+})
+
+const observeImages = () => {
+    const loadingImages:NodeListOf<HTMLImageElement> = document.querySelectorAll(".loading")
+    loadingImages.forEach((loadingImage) => {
+        loadingImageObserver.observe(loadingImage)
+    })
+}
+
+export {removeAllChildElements, toggleDarkMode, observeImages}

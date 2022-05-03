@@ -1,4 +1,4 @@
-interface countryInfo {
+interface CountryInfo {
     name:string,
     population:number
     region:string
@@ -6,15 +6,15 @@ interface countryInfo {
     flag: string,
 }
 
-const getCountriesInfo = ():Promise<countryInfo[]> => {
+const getCountriesInfo = ():Promise<CountryInfo[]> => {
     return fetch("https://restcountries.com/v3.1/all").then(response => response.json()).then(response => {return response})
 }
 
-const getCountryInfo = (country:string):Promise<countryInfo[]> => {
+const getCountryInfo = (country:string):Promise<CountryInfo[]> => {
     return fetch(`https://restcountries.com/v3.1/name/${country}`).then(response => response.json()).then(response => {return response})
 }
 
-const parseCountryInfo = async (country:any):Promise<countryInfo> => {
+const parseCountryInfo = async (country:any):Promise<CountryInfo> => {
     const countryInfo = await country
     return {
         name: countryInfo.name.common,
@@ -25,4 +25,4 @@ const parseCountryInfo = async (country:any):Promise<countryInfo> => {
     }
 }
 
-export {countryInfo, parseCountryInfo, getCountriesInfo, getCountryInfo}
+export {CountryInfo, parseCountryInfo, getCountriesInfo, getCountryInfo}

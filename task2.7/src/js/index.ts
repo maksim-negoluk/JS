@@ -1,9 +1,8 @@
 import "../styles/style.scss"
 import {render} from "./render";
+import {observeImages} from "./utils";
 
-window.onload = async ():Promise<void> => {
+window.onload = async () => {
     await render()
+    observeImages()
 }
-
-//add lazy loading
-//npm run dev

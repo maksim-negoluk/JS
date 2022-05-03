@@ -1,11 +1,11 @@
-import {countryInfo, getCountriesInfo, parseCountryInfo, getCountryInfo} from "./data";
-import {removeAllChildElements, toggleDarkMode} from "./utils";
+import {CountryInfo, getCountriesInfo, getCountryInfo, parseCountryInfo} from "./data";
+import {removeAllChildElements, toggleDarkMode, observeImages} from "./utils";
 
-const render = async ():Promise<void> => {
+const render = async () => {
     const wrapper = document.querySelector(".wrapper")
     wrapper.classList.add("light-theme")
-    const countriesResponse:countryInfo[] = await getCountriesInfo()
-    const countries:countryInfo[] = await Promise.all(countriesResponse.map((country:countryInfo):Promise<countryInfo> => {
+    const countriesResponse:CountryInfo[] = await getCountriesInfo()
+    const countries:CountryInfo[] = await Promise.all(countriesResponse.map((country:CountryInfo):Promise<CountryInfo> => {
         return parseCountryInfo(country)
     }))
     await Promise.all(countries.sort((country:any, nextCountry:any):number => {
@@ -18,7 +18,7 @@ const render = async ():Promise<void> => {
 
 
 
-const renderTitleBlock = (countries:countryInfo[]):HTMLDivElement => {
+const renderTitleBlock = (countries:CountryInfo[]) => {
     const titleBlock:HTMLDivElement = document.createElement("div")
     titleBlock.className = "title-block"
     titleBlock.insertAdjacentElement("beforeend", renderTitle(countries))
@@ -26,17 +26,18 @@ const renderTitleBlock = (countries:countryInfo[]):HTMLDivElement => {
     return titleBlock
 }
 
-const renderTitle = (countries:countryInfo[]):HTMLSpanElement => {
+const renderTitle = (countries:CountryInfo[]) => {
     const title = document.createElement("span")
     title.className = "title"
     title.innerHTML = "Where in the world?"
     title.addEventListener("click", async (event):Promise<void> => {
         await renderCountryList(countries, true)
+        observeImages()
     })
     return title
 }
 
-const renderDarkModeToggle = ():HTMLButtonElement => {
+const renderDarkModeToggle = () => {
     const toggle = document.createElement("button")
     toggle.className = "dark-mode-toggle"
     toggle.innerHTML = `<div class="moon"></div><span>dark mode</span>`
@@ -48,7 +49,7 @@ const renderDarkModeToggle = ():HTMLButtonElement => {
 
 
 
-const renderMainBlock = async (countries:countryInfo[]):Promise<HTMLDivElement> => {
+const renderMainBlock = async (countries:CountryInfo[]) => {
     const mainBlock = document.createElement("div")
     mainBlock.className = "main-block"
     mainBlock.insertAdjacentElement("beforeend", await renderSearchBlock(countries))
@@ -56,10 +57,10 @@ const renderMainBlock = async (countries:countryInfo[]):Promise<HTMLDivElement> 
     return mainBlock
 }
 
-const renderSearchBlock = async (countries:countryInfo[]):Promise<HTMLDivElement> => {
+const renderSearchBlock = async (countries:CountryInfo[]) => {
     const searchBlock = document.createElement("div")
     searchBlock.className = "search-block"
-    const regions:string[] = countries.map((country:countryInfo):string => {
+    const regions:string[] = countries.map((country:CountryInfo):string => {
         return country.region
     })
     searchBlock.insertAdjacentElement("beforeend", await renderSearchBar())
@@ -67,7 +68,7 @@ const renderSearchBlock = async (countries:countryInfo[]):Promise<HTMLDivElement
     return searchBlock
 }
 
-const renderSearchBar = async ():Promise<HTMLFormElement> => {
+const renderSearchBar = async () => {
     const form = document.createElement("form")
     const searchBar = document.createElement("input")
     searchBar.type = "search"
@@ -79,11 +80,12 @@ const renderSearchBar = async ():Promise<HTMLFormElement> => {
         const errorMessage = document.querySelector(".error-message");
         (errorMessage !== null) && (errorMessage.remove())
         try {
-            const countryInfo:countryInfo[] = await getCountryInfo(searchBar.value)
-            const parsedCountryInfo:countryInfo[] = await Promise.all(countryInfo.map((country:countryInfo) => {
+            const countryInfo:CountryInfo[] = await getCountryInfo(searchBar.value)
+            const parsedCountryInfo:CountryInfo[] = await Promise.all(countryInfo.map((country:CountryInfo) => {
                 return parseCountryInfo(country)
             }))
             await renderCountryList(parsedCountryInfo, true)
+            observeImages()
         }
         catch (error) {
             form.insertAdjacentElement("beforeend", renderSearchError("invalid country"))
@@ -94,22 +96,23 @@ const renderSearchBar = async ():Promise<HTMLFormElement> => {
     return form
 }
 
-const renderSearchError = (errorMessage:string):HTMLSpanElement => {
+const renderSearchError = (errorMessage:string) => {
     const error = document.createElement("span")
     error.className = "error-message"
     error.innerHTML = `error: ${errorMessage}`
     return error
 }
 
-const renderSelect = (countries:countryInfo[], options:string[]):HTMLSelectElement => {
+const renderSelect = (countries:CountryInfo[], options:string[]) => {
     const select = document.createElement("select")
     select.className = "select-by-region"
     select.insertAdjacentHTML("beforeend", `<option value="default option" selected disabled hidden>filter by region</option>`)
     select.addEventListener("change", async (event):Promise<void> => {
-        const countriesInRegion:countryInfo[] = countries.filter((country:countryInfo):boolean => {
+        const countriesInRegion:CountryInfo[] = countries.filter((country:CountryInfo):boolean => {
             return country.region === select.value
         })
         await renderCountryList(countriesInRegion, true)
+        observeImages()
     })
     options.forEach(option => {
         select.insertAdjacentHTML("beforeend", `<option value="${option}">${option}</option>`)
@@ -117,7 +120,7 @@ const renderSelect = (countries:countryInfo[], options:string[]):HTMLSelectEleme
     return select
 }
 
-const renderCountryList = async (countries:countryInfo[], replace = false):Promise<HTMLDivElement> => {
+const renderCountryList = async (countries:CountryInfo[], replace = false) => {
     const oldCountryList = document.querySelector(".country-list")
     const countriesList = document.createElement("div")
     countriesList.className = "country-list";
@@ -129,14 +132,14 @@ const renderCountryList = async (countries:countryInfo[], replace = false):Promi
     return countriesList
 }
 
-const renderCountry = (country:countryInfo):HTMLDivElement => {
+const renderCountry = (country:CountryInfo) => {
     if(country.capital === undefined) {
         country.capital = "none"
     }
     const countryBlock = document.createElement("div")
     countryBlock.className = "country"
     countryBlock.innerHTML = `
-            <img src="${country.flag}" alt="flag">
+            <img class="loading" src="https://place-hold.it/350x200" data-src="${country.flag}" alt="flag">
             <p class="name">${country.name}</p>
             <p class="population"><span>Population:</span>${country.population.toLocaleString("en-US")}</p>
             <p class="region"><span>Region:</span>${country.region}</p>
